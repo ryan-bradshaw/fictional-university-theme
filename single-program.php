@@ -50,7 +50,7 @@
                         $relatedProfessors -> the_post(); ?>
                         <li class="professor-card__list-item">
                             <a class ="professor-card" href="<?php the_permalink(); ?>">
-                                <img class="professor-card__image" src="<?php the_post_thumbnail_url(); ?>">
+                                <img class="professor-card__image" src="<?php the_post_thumbnail_url('professorLandscape'); ?>">
                                 <span class="professor-card__name"><?php the_title(); ?></span>
                             </a>
                         </li>
@@ -115,7 +115,6 @@
                             ?> <a href="<?php the_permalink(); ?>" class="nu gray">Learn more</a></p>
                         </div>
                     </div>
-    
                 <?php } 
             }
         wp_reset_postdata(); //ALWAYS USE THIS METHOD after using a CUSTOM query ?>
@@ -127,8 +126,9 @@
             echo '<hr class="section-break">';
             echo '<h2 class="headline">' . get_the_title() . ' is available at these Campuses:</h2>';
             echo '<ul class="min-list link-list">';
+
             foreach($relatedCampus as $campus){
-                ?><li><a href="<?php get_the_permalink($campus);?>"><?php echo get_the_title($campus); ?></a></li><?php
+                ?><li><a href="<?php echo get_the_permalink($campus);?>"><?php echo get_the_title($campus); ?></a></li><?php
             }
             // permalink is sending to wrong page?
             echo '</ul>';

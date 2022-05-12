@@ -18,7 +18,6 @@ function university_files(){
 
 }
 
-
 add_action('wp_enqueue_scripts', 'university_files');
 //arguments are (when to execute, function to execute)
 
@@ -28,7 +27,7 @@ function university_features(){
     //adds title to each page that is unique
 
     add_theme_support('post-thumbnails');
-    //adds pictures to professors
+    //adds pictures to professors as featured images
 
     add_image_size('professorLandscape', 400, 260, true);
     add_image_size('professorPortrait', 480, 650, true);
@@ -66,6 +65,12 @@ add_action('after_setup_theme','university_features');
 //modify default query
 
 function university_adjust_queries($query){
+    if(!is_admin() AND is_post_type_archive('campus') AND $query -> is_main_query()){
+        // $query -> set('orderby', 'title');
+        // $query -> set('order', 'ASC');
+        $query -> set('posts_per_page', -1);
+    }
+
     if(!is_admin() AND is_post_type_archive('program') AND $query -> is_main_query()){
         $query -> set('orderby', 'title');
         $query -> set('order', 'ASC');
