@@ -1,5 +1,33 @@
 <?php 
-//REMEMBER TO ENTER API KEYS ON LINE 4 & 97
+//REMEMBER TO ENTER API KEYS ON LINE 33 & 132
+
+function pageBanner($args = NULL){
+    if(!$args['title']){
+        $args['title'] = get_the_title();
+    }
+    if(!$args['subtitle']){
+        $args['subtitle'] = get_field('page_banner_subtitle');
+    }
+    if(!$args['image']){
+        if(get_field('page_banner_image') AND !is_archive() AND !is_home()){
+            $args['image'] = get_field('page_banner_image')['sizes']['pageBanner'];
+        }
+        else{
+            $args['image'] = get_theme_file_uri('images/ocean.jpg');
+        }
+    }
+?>
+    <div class="page-banner">
+        <div class="page-banner__bg-image" style="background-image: url(<?php echo $args['image']; ?>);"></div>
+        <div class="page-banner__content container container--narrow">
+            <h1 class="page-banner__title"><?php echo $args['title'] ?></h1>
+                <div class="page-banner__intro">
+                <p><?php echo $args['subtitle']; ?></p>
+        </div>
+    </div>
+</div>
+
+<?php }
 
 function university_files(){
     wp_enqueue_script('google-map', '//maps.googleapis.com/maps/api/js?key=', NULL, '1.0', true); //INSERT API KEY TO END OF URL
@@ -31,6 +59,7 @@ function university_features(){
 
     add_image_size('professorLandscape', 400, 260, true);
     add_image_size('professorPortrait', 480, 650, true);
+    add_image_size('pageBanner', 1500, 350, true);
     //adds custom size versions of images
 
     // register_nav_menu('headerMenuLocation', 'Header Menu Location');
