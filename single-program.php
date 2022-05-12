@@ -91,7 +91,9 @@
                 echo '<h2 class="headline headline--small"> Upcoming '. get_the_title() . ' Department Events </h2>';
     
                 while($homePageEvents -> have_posts()){
-                    $homePageEvents -> the_post(); ?>
+                    $homePageEvents -> the_post(); 
+                    get_template_part('template-parts/content-event');
+                    ?>
     
                     <div class="event-summary">
                         <a class="event-summary__date t-center" href="#">
@@ -116,8 +118,22 @@
     
                 <?php } 
             }
-            wp_reset_postdata(); //ALWAYS USE THIS METHOD after using a CUSTOM query ?>
+        wp_reset_postdata(); //ALWAYS USE THIS METHOD after using a CUSTOM query ?>
 <!-- end custom query -->
+    <?php 
+        $relatedCampus = get_field('related_campus');
+
+        if($relatedCampus){
+            echo '<hr class="section-break">';
+            echo '<h2 class="headline">' . get_the_title() . ' is available at these Campuses:</h2>';
+            echo '<ul class="min-list link-list">';
+            foreach($relatedCampus as $campus){
+                ?><li><a href="<?php get_the_permalink($campus);?>"><?php echo get_the_title($campus); ?></a></li><?php
+            }
+            // permalink is sending to wrong page?
+            echo '</ul>';
+        }
+    ?>
 
     <?php } ?>
 <?php get_footer(); ?>
