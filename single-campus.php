@@ -4,7 +4,7 @@
     while(have_posts()){
         the_post();
         pageBanner(array(
-            'title' => the_title(),
+            'title' => get_the_title(),
             'subtitle' => 'A gem in the heart of the city'
         ));
         ?>
