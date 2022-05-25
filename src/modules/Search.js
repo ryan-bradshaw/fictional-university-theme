@@ -67,15 +67,15 @@ class Search {
     }
 
     getResults(){
-        // this.isSpinnerVisible = false;
         //(url, function)
-        $.getJSON('http://fictional-university.local/wp-json/wp/v2/posts?search=' + this.searchField.val(), results => {
+        $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), results => {
             this.searchResults.html(`
                 <h2 class="search-overlay__section-title">Results:</h2>
                 ${results.length ? '<ul class="link-list min-list">':'<p> No results were found for that search </p>'}
                     ${results.map(item => `<li><a href='${item.link}'>${item.title.rendered}</a></li>`).join('')}
                 ${results.length ? '</ul>': ''}
             `);
+            this.isSpinnerVisible = false;
         });
 
     }

@@ -4138,15 +4138,15 @@ class Search {
   }
 
   getResults() {
-    // this.isSpinnerVisible = false;
     //(url, function)
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON('http://fictional-university.local/wp-json/wp/v2/posts?search=' + this.searchField.val(), results => {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), results => {
       this.searchResults.html(`
                 <h2 class="search-overlay__section-title">Results:</h2>
                 ${results.length ? '<ul class="link-list min-list">' : '<p> No results were found for that search </p>'}
                     ${results.map(item => `<li><a href='${item.link}'>${item.title.rendered}</a></li>`).join('')}
                 ${results.length ? '</ul>' : ''}
             `);
+      this.isSpinnerVisible = false;
     });
   }
 
