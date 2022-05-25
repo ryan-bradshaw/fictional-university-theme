@@ -72,13 +72,16 @@ class Search {
     getResults(){
         //(url, function)
         $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), results => {
-            this.searchResults.html(`
+            $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val(), pages => {
+                var combinedResults = posts.concat(pages);
+                this.searchResults.html(`
                 <h2 class="search-overlay__section-title">Results:</h2>
-                ${results.length ? '<ul class="link-list min-list">':'<p> No results were found for that search </p>'}
-                    ${results.map(item => `<li><a href='${item.link}'>${item.title.rendered}</a></li>`).join('')}
-                ${results.length ? '</ul>': ''}
+                ${combinedResults.length ? '<ul class="link-list min-list">':'<p> No results were found for that search </p>'}
+                    ${combinedResults.map(item => `<li><a href='${item.link}'>${item.title.rendered}</a></li>`).join('')}
+                ${combinedResults.length ? '</ul>': ''}
             `);
             this.isSpinnerVisible = false;
+            });
         });
 
     }
